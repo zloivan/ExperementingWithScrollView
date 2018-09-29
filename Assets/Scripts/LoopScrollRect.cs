@@ -821,7 +821,7 @@ namespace UnityEngine.UI
 
             EnsureLayoutHasRebuilt();
             UpdateScrollbarVisibility();
-            UpdateBounds();
+            UpdateBounds(!m_Dragging && m_Velocity != Vector2.zero);
             float deltaTime = Time.unscaledDeltaTime;
             Vector2 offset = CalculateOffset(Vector2.zero);
             if (!m_Dragging && (offset != Vector2.zero || m_Velocity != Vector2.zero))

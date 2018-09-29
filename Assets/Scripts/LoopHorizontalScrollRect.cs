@@ -45,33 +45,49 @@ namespace UnityEngine.UI
 
         protected override bool UpdateItems(Bounds viewBounds, Bounds contentBounds)
         {
-            bool changed = false;
+            float totalSize = 0;
             if (viewBounds.max.x > contentBounds.max.x)
             {
                 float size = NewItemAtEnd();
-                if (size > 0)
-                    changed = true;
+                totalSize += size;
+                while (size > 0 && viewBounds.max.x > contentBounds.max.x + totalSize)
+                {
+                    size = NewItemAtEnd();
+                    totalSize += size;
+                }
             }
             else if (viewBounds.max.x < contentBounds.max.x - threshold && viewBounds.min.x > contentBounds.min.x)
             {
                 float size = DeleteItemAtEnd();
-                if (size > 0)
-                    changed = true;
+                totalSize += size;
+                while (size > 0 && viewBounds.max.x < contentBounds.max.x - threshold - totalSize)
+                {
+                    size = DeleteItemAtEnd();
+                    totalSize += size;
+                }
             }
 
             if (viewBounds.min.x < contentBounds.min.x)
             {
                 float size = NewItemAtStart();
-                if (size > 0)
-                    changed = true;
+                totalSize += size;
+                while (size > 0 && viewBounds.min.x < contentBounds.min.x - totalSize)
+                {
+                    size = NewItemAtStart();
+                    totalSize += size;
+                }
             }
             else if (viewBounds.min.x > contentBounds.min.x + threshold && viewBounds.max.x < contentBounds.max.x)
             {
                 float size = DeleteItemAtStart();
-                if (size > 0)
-                    changed = true;
+                totalSize += size;
+                while (size > 0 && viewBounds.min.x > contentBounds.min.x + threshold + totalSize)
+                {
+                    size = DeleteItemAtStart();
+                    totalSize += size;
+                }
             }
-            return changed;
+            return totalSize > 0;
         }
     }
 }
