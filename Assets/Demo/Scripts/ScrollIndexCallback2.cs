@@ -17,4 +17,9 @@ public class ScrollIndexCallback2 : MonoBehaviour
         element.preferredWidth = randomWidths[Mathf.Abs(idx) % 3];
         gameObject.name = name;
     }
+
+    public void OnClick()
+    {
+        element.preferredHeight = 500;
+    }
 }

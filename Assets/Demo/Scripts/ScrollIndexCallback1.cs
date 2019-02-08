@@ -6,7 +6,7 @@ public class ScrollIndexCallback1 : MonoBehaviour
 {
     public Image image;
 	public Text text;
-
+    public LayoutElement element;
     void ScrollCellIndex (int idx) 
     {
 		string name = "Cell " + idx.ToString ();
@@ -66,5 +66,21 @@ public class ScrollIndexCallback1 : MonoBehaviour
                 break;
         }
         return new Color(r, g, b);
+    }
+
+    private bool isDetailed;
+    public void OnClick()
+    {
+        if (!isDetailed)
+        {
+            element.preferredHeight = 150;
+            isDetailed = true;
+        }
+        else
+        {
+            element.preferredHeight = 50;
+            isDetailed = false;
+        }
+        
     }
 }
